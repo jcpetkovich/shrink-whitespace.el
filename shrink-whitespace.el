@@ -42,6 +42,7 @@
 
 ;;; Code:
 
+;;;###autoload
 (defun shrink-whitespace ()
   "Remove whitespace around cursor to just one or none.
 If current line contains non-white space chars, then shrink any
@@ -49,17 +50,17 @@ whitespace char surrounding cursor to just one space.  If current
 line does not contain non-white space chars, then remove blank
 lines to just one."
   (interactive)
-  (cond ((shrink-whitespace-just-one-space-p)
+  (cond ((shrink-whitespace--just-one-space-p)
          (delete-horizontal-space))
-        ((not (shrink-whitespace-line-has-meat-p))
+        ((not (shrink-whitespace--line-has-meat-p))
          (delete-blank-lines))
-        ((and (shrink-whitespace-line-has-meat-p)
+        ((and (shrink-whitespace--line-has-meat-p)
               (or
                (looking-at " \\|\t")
                (looking-back " \\|\t")))
          (just-one-space))))
 
-(defun shrink-whitespace-just-one-space-p ()
+(defun shrink-whitespace--just-one-space-p ()
   "Return a truthy value if there is only one space at point."
   (save-excursion
     (let (beginning end)
@@ -69,7 +70,7 @@ lines to just one."
       (setf end (point))
       (= 1 (- end beginning)))))
 
-(defun shrink-whitespace-line-has-meat-p ()
+(defun shrink-whitespace--line-has-meat-p ()
   "Return truthy if line at point has any characters, nil otherwise."
   (save-excursion
     (move-beginning-of-line 1)
@@ -80,18 +81,19 @@ lines to just one."
       (< 0 (count-matches "[[:graph:]]" line-begin-pos line-end-pos)))))
 
 
-(defun shrink-whitespace-open-line-above ()
+(defun shrink-whitespace--open-line-above ()
   "Put a blank line above point."
   (beginning-of-line)
   (newline)
   (forward-line -1))
 
-(defun shrink-whitespace-open-line-below ()
+(defun shrink-whitespace--open-line-below ()
   "Put a blank line after point."
   (end-of-line)
   (newline)
   (indent-for-tab-command))
 
+;;;###autoload
 (defun shrink-whitespace-grow-whitespace-around ()
   "Counterpart to shrink-whitespace, grow whitespace in a smartish way."
   (interactive)
@@ -102,24 +104,25 @@ lines to just one."
       ;; move up a line and to the beginning
       (beginning-of-line 0)
 
-      (when (shrink-whitespace-line-has-meat-p)
+      (when (shrink-whitespace--line-has-meat-p)
         (setq content-above t)))
 
     (save-excursion
       ;; move down a line and to the beginning
       (beginning-of-line 2)
-      (when (shrink-whitespace-line-has-meat-p)
+      (when (shrink-whitespace--line-has-meat-p)
         (setq content-below t)))
 
     (save-excursion
       (if content-above
-          (shrink-whitespace-open-line-above)
+          (shrink-whitespace--open-line-above)
         (if content-below
-            (shrink-whitespace-open-line-below))))
+            (shrink-whitespace--open-line-below))))
     (if (and (= (line-beginning-position) (point))
              content-above)
         (forward-line))))
 
+;;;###autoload
 (defun shrink-whitespace-shrink-whitespace-around ()
   "Shrink whitespace surrounding point."
   (interactive)
@@ -128,12 +131,12 @@ lines to just one."
 
     (save-excursion
       (beginning-of-line 0)
-      (when (shrink-whitespace-line-has-meat-p)
+      (when (shrink-whitespace--line-has-meat-p)
         (setq content-above t)))
 
     (save-excursion
       (beginning-of-line 2)
-      (when (shrink-whitespace-line-has-meat-p)
+      (when (shrink-whitespace--line-has-meat-p)
         (setq content-below t)))
 
     (save-excursion
