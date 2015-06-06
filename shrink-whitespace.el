@@ -1,14 +1,48 @@
-;;; shrink-whitespace.el --- Whitespace removal DWIM key
-;;
-;; Copyright (c) 2012-2014 Jean-Christophe Petkovich
-;; Copyright (c) 2014-2015 Jean-Christophe Petkovich
-;;
-;; Author: Jean-Christophe Petkovich
-;; URL: https://github.com/jcpetkovich/shrink-whitespace.el
-;;
+;;; shrink-whitespace.el --- Whitespace removal DWIM key -*- coding: utf-8-unix -*-
+
+;; Copyright (C) 2012 Jean-Christophe Petkovich <jcpetkovich@gmail.com>
+
+;; Author   : Jean-Christophe Petkovich <jcpetkovich@gmail.com>
+;; Created  : 6 June 2015
+;; URL      : https://github.com/jcpetkovich/shrink-whitespace.el
+;; Version  : 0.0.1
+;; Keywords : editing
+
+;; Please see README.md for documentation, or read it online at
+;; https://github.com/jcpetkovich/shrink-whitespace.el
+
+;;; License:
+
 ;; This file is not part of GNU Emacs.
+;; However, it is distributed under the same license.
+
+;; GNU Emacs is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation; either version 3, or (at your option)
+;; any later version.
+
+;; GNU Emacs is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with GNU Emacs; see the file COPYING.  If not, write to the
+;; Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+;; Boston, MA 02110-1301, USA.
+
+;;; Commentary:
+
+;; Bind shrink-whitespace to a key, and start spamming it in places where you
+;; want to remove whitespace. M-\ is not a bad key for this, as it does
+;; something analagous, but isn't quite as smart.
 ;;
-;;; License: GPLv3
+;; (global-set-key (kbd "M-\\") 'shrink-whitespace)
+
+;; ----------------------------------------------------------
+
+
+;;; Code:
 
 (defun shrink-whitespace ()
   "Remove whitespace around cursor to just one or none.
@@ -28,6 +62,7 @@ lines to just one."
          (just-one-space))))
 
 (defun shrink-whitespace-just-one-space-p ()
+  "Return a truthy value if there is only one space at point."
   (save-excursion
     (let (beginning end)
       (skip-chars-backward " \t")
@@ -37,31 +72,30 @@ lines to just one."
       (= 1 (- end beginning)))))
 
 (defun shrink-whitespace-line-has-meat-p ()
-  "Returns `t' if line has any characters, `nil' otherwise."
+  "Return truthy if line at point has any characters, nil otherwise."
   (save-excursion
     (move-beginning-of-line 1)
     (let ((line-begin-pos (point))
           line-end-pos)
       (move-end-of-line 1)
       (setq line-end-pos (point))
-      (if (< 0 (count-matches "[[:graph:]]" line-begin-pos line-end-pos))
-          t
-        nil))))
+      (< 0 (count-matches "[[:graph:]]" line-begin-pos line-end-pos)))))
 
 
 (defun shrink-whitespace-open-line-above ()
+  "Put a blank line above point."
   (beginning-of-line)
   (newline)
   (forward-line -1))
 
 (defun shrink-whitespace-open-line-below ()
+  "Put a blank line after point."
   (end-of-line)
   (newline)
   (indent-for-tab-command))
 
 (defun shrink-whitespace-grow-whitespace-around ()
-  "Counterpart to shrink-whitespace, grow whitespace in a
-  smartish way."
+  "Counterpart to shrink-whitespace, grow whitespace in a smartish way."
   (interactive)
   (let ((content-above nil)
         (content-below nil))
@@ -89,6 +123,7 @@ lines to just one."
         (forward-line))))
 
 (defun shrink-whitespace-shrink-whitespace-around ()
+  "Shrink whitespace surrounding point."
   (interactive)
   (let ((content-above nil)
         (content-below nil))
@@ -116,6 +151,5 @@ lines to just one."
 (defalias 'grow-whitespace-around 'shrink-whitespace-grow-whitespace-around)
 (defalias 'shrink-whitespace-around 'shrink-whitespace-shrink-whitespace-around)
 
-(bind-key "M-\\" 'shrink-whitespace)
-
 (provide 'shrink-whitespace)
+;;; shrink-whitespace.el ends here
