@@ -38,9 +38,7 @@
 ;; something analagous, but isn't quite as smart.
 ;;
 ;; (global-set-key (kbd "M-\\") 'shrink-whitespace)
-
 ;; ----------------------------------------------------------
-
 
 ;;; Code:
 
