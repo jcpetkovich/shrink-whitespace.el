@@ -70,10 +70,10 @@ lines to just one."
 
     (save-excursion
       (if content-above
-          (open-line-above)
+          (shrink-whitespace-open-line-above)
         (if content-below
-            (open-line-below))))
-    (if (and (equal (line-beginning-position) (point))
+            (shrink-whitespace-open-line-below))))
+    (if (and (= (line-beginning-position) (point))
              content-above)
         (forward-line))))
 
