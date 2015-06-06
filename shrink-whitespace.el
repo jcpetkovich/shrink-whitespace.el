@@ -34,7 +34,7 @@ lines to just one."
       (setf beginning (point))
       (skip-chars-forward " \t")
       (setf end (point))
-      (equalp 1 (- end beginning)))))
+      (= 1 (- end beginning)))))
 
 (defun shrink-whitespace-line-has-meat-p ()
   "Returns `t' if line has any characters, `nil' otherwise."
