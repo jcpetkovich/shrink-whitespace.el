@@ -48,6 +48,17 @@ lines to just one."
           t
         nil))))
 
+
+(defun shrink-whitespace-open-line-above ()
+  (beginning-of-line)
+  (newline)
+  (forward-line -1))
+
+(defun shrink-whitespace-open-line-below ()
+  (end-of-line)
+  (newline)
+  (indent-for-tab-command))
+
 (defun shrink-whitespace-grow-whitespace-around ()
   "Counterpart to shrink-whitespace, grow whitespace in a
   smartish way."
