@@ -69,5 +69,5 @@ int main(int argc,(|)char *argv[])
 }
 ```
 
-That's really all there is too it, but I find it remarkably useful, and use it
+That's really all there is to it, but I find it remarkably useful, and use it
 every single day.
