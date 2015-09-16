@@ -58,7 +58,13 @@ lines to just one."
               (or
                (looking-at " \\|\t")
                (looking-back " \\|\t")))
-         (just-one-space))))
+         (just-one-space))
+        ((and (shrink-whitespace--line-has-meat-p)
+              (looking-back "\n"))
+         (delete-char -1))
+        ((and (shrink-whitespace--line-has-meat-p)
+              (looking-at "\n"))
+         (delete-char 1))))
 
 (defun shrink-whitespace--just-one-space-p ()
   "Return a truthy value if there is only one space at point."
