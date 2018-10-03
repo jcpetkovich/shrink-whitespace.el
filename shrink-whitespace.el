@@ -6,7 +6,7 @@
 ;; Created  : 6 June 2015
 ;; URL      : https://gitlab.com/jcpetkovich/shrink-whitespace.el
 ;; Version  : 0.0.3
-;; Keywords : editing
+;; Keywords : convenience
 
 ;; Please see README.md for documentation, or read it online at
 ;; https://gitlab.com/jcpetkovich/shrink-whitespace.el
@@ -48,7 +48,8 @@
 If current line contains non-white space chars, then shrink any
 whitespace char surrounding cursor to just one space.  If current
 line does not contain non-white space chars, then remove blank
-lines to just one."
+lines to just one.
+Argument ARG Prevents removal of newlines when no other whitespace exists."
   (interactive "P")
   (cond ((shrink-whitespace--just-one-space-p)
          (delete-horizontal-space))
@@ -103,7 +104,7 @@ lines to just one."
 
 ;;;###autoload
 (defun shrink-whitespace-grow-whitespace-around ()
-  "Counterpart to shrink-whitespace, grow whitespace in a smartish way."
+  "Counterpart to 'shrink-whitespace', grow whitespace in a smartish way."
   (interactive)
   (let ((content-above nil)
         (content-below nil))
