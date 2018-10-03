@@ -4,12 +4,12 @@
 
 ;; Author   : Jean-Christophe Petkovich <jcpetkovich@gmail.com>
 ;; Created  : 6 June 2015
-;; URL      : https://github.com/jcpetkovich/shrink-whitespace.el
+;; URL      : https://gitlab.com/jcpetkovich/shrink-whitespace.el
 ;; Version  : 0.0.1
 ;; Keywords : editing
 
 ;; Please see README.md for documentation, or read it online at
-;; https://github.com/jcpetkovich/shrink-whitespace.el
+;; https://gitlab.com/jcpetkovich/shrink-whitespace.el
 
 ;;; License:
 
