@@ -43,13 +43,13 @@
 ;;; Code:
 
 ;;;###autoload
-(defun shrink-whitespace ()
+(defun shrink-whitespace (arg)
   "Remove whitespace around cursor to just one or none.
 If current line contains non-white space chars, then shrink any
 whitespace char surrounding cursor to just one space.  If current
 line does not contain non-white space chars, then remove blank
 lines to just one."
-  (interactive)
+  (interactive "P")
   (cond ((shrink-whitespace--just-one-space-p)
          (delete-horizontal-space))
         ((not (shrink-whitespace--line-has-meat-p))
@@ -59,12 +59,14 @@ lines to just one."
                (looking-at " \\|\t")
                (looking-back " \\|\t")))
          (just-one-space))
-        ((and (shrink-whitespace--line-has-meat-p)
-              (looking-back "\n"))
-         (delete-char -1))
-        ((and (shrink-whitespace--line-has-meat-p)
-              (looking-at "\n"))
-         (delete-char 1))))
+        ((not arg)
+         (cond
+          ((and (shrink-whitespace--line-has-meat-p)
+                (looking-back "\n"))
+           (delete-char -1))
+          ((and (shrink-whitespace--line-has-meat-p)
+                (looking-at "\n"))
+           (delete-char 1))))))
 
 (defun shrink-whitespace--just-one-space-p ()
   "Return a truthy value if there is only one space at point."
