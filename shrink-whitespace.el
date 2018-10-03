@@ -5,7 +5,7 @@
 ;; Author   : Jean-Christophe Petkovich <jcpetkovich@gmail.com>
 ;; Created  : 6 June 2015
 ;; URL      : https://gitlab.com/jcpetkovich/shrink-whitespace.el
-;; Version  : 0.0.1
+;; Version  : 0.0.3
 ;; Keywords : editing
 
 ;; Please see README.md for documentation, or read it online at
